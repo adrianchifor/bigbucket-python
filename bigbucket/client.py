@@ -86,6 +86,19 @@ class Table(object):
         return int(parse_response(r)["rowsCount"])
 
     @authenticate
+    def list_rows(self, prefix: str = None) -> list:
+        try:
+            params = {"table": self.table_name}
+            if prefix:
+                params["prefix"] = prefix
+            r = requests.get(f"{self.address}/api/row/list", params=params,
+                             timeout=self.timeout, headers=self.headers)
+        except Exception as e:
+            handle_exception(e)
+
+        return parse_response(r)["rowKeys"]
+
+    @authenticate
     def read_row(self, key: str, columns: list = None) -> dict:
         try:
             params = {"table": self.table_name, "key": key}
