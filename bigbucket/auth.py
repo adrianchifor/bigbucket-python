@@ -10,20 +10,20 @@ def authenticate(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
         if self.gcp_auth:
-            self.headers, self.jwt = _get_gcp_auth_header(
+            self.headers["Authorization"], self.jwt = _get_gcp_auth_header(
                 self.jwt, self.address)
         return func(self, *args, **kwargs)
     return wrapper
 
 
-def _get_gcp_auth_header(jwt: str, address: str) -> (dict, str):
+def _get_gcp_auth_header(jwt: str, address: str) -> (str, str):
     """
     Constructs the auth header and returns it with a refreshed jwt token
     """
     if _jwt_expired(jwt):
         jwt = _get_gcp_auth_token(address)
 
-    return {"Authorization": f"bearer {jwt}"}, jwt
+    return f"bearer {jwt}", jwt
 
 
 def _get_gcp_auth_token(receiving_service_url: str) -> str:

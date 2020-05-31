@@ -7,12 +7,12 @@ from bigbucket.utils import parse_response, handle_exception
 
 
 class Client(object):
-    def __init__(self, address: str = "http://localhost:8080",
-                 timeout: float = 30.0, gcp_auth: bool = False):
+    def __init__(self, address: str = "http://localhost:8080", timeout: float = 30.0,
+                 gcp_auth: bool = False, request_headers: dict = {}):
         self.address = address
         self.timeout = timeout
         self.gcp_auth = gcp_auth
-        self.headers = None
+        self.headers = request_headers
         self.jwt = None
 
     @authenticate

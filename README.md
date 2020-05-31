@@ -115,7 +115,7 @@ tbl.delete_table()
 Defaults
 
 ```python
-client = bigbucket.Client(address="http://localhost:8080", timeout=30.0, gcp_auth=False)
+client = bigbucket.Client(address="http://localhost:8080", timeout=30.0, gcp_auth=False, request_headers={})
 ```
 
 ```
@@ -129,6 +129,8 @@ timeout  - Requests timeout (seconds, float)
 gcp_auth - If True it generates GCP JWT tokens for address and adds 'Authorization' header to requests.
            Useful when running clients in GCP and need to authenticate against private Cloud Run services.
            (docs -> https://cloud.google.com/run/docs/authenticating/service-to-service)
+
+request_headers - Custom headers to add to requests
 ```
 
 ## Exceptions
